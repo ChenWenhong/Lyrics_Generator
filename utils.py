@@ -7,7 +7,7 @@ import numpy as np
 import re
 import itertools
 import poetrytools as pt
-
+import itertools
 class TextLoader():
     def __init__(self, data_dir, batch_size, seq_length, encoding=None):
         self.data_dir = data_dir
@@ -67,13 +67,15 @@ class TextLoader():
         with codecs.open(input_file, "r", encoding=encoding) as f:
             data = f.read()
 
-        lyrics = poetrytools.tokenize(data)
-        for i in range(0,len(lyrics)):
+        lyrics = pt.tokenize(data)
+        for i in range(0,len(lyrics)-1):
+            lyrics[i].append(' ')
             if(pt.rhymes(lyrics[i][-1],lyrics[i+1][-1],1)):
                 lyrics[i].append('*endLine*')
                 lyrics[i+1].append('*endLine*')
-
-        data = list(chain.from_iterable(lyrics))
+     
+        lyrics_list = list(itertools.chain.from_iterable(lyrics))
+        print("Lyrics:",lyrics_list)
         # Optional text cleaning or make them lower case, etc.
         data = self.clean_str(data)
         x_text = data.split()
