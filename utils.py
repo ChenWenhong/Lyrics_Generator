@@ -68,13 +68,14 @@ class TextLoader():
             data = f.read()
 
         lyrics = pt.tokenize(data)
-        for i in range(0,len(lyrics)-1):
-            lyrics[i].append(' ')
+        for i in range(0,len(lyrics)):
+            lyrics[i].append('*break*')
+        for i in range(0,len(lyrics)-1):    
             if(len(lyrics[i]) > 1 and len(lyrics[i + 1]) > 1):
                 if(pt.rhymes(lyrics[i][-2],lyrics[i+1][-2],1)):
                     lyrics[i].append('*endLine*')
                     lyrics[i+1].append('*endLine*')
-
+        print("List of lyrics:",lyrics)
         lyrics_list = list(itertools.chain.from_iterable(lyrics))
         # Optional text cleaning or make them lower case, etc.
         data = self.clean_str(data)
