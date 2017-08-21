@@ -20,7 +20,7 @@ def main():
                        help='directory containing tensorboard logs')
     parser.add_argument('--save_dir', type=str, default='save',
                        help='directory to store checkpointed models')
-    parser.add_argument('--rnn_size', type=int, default=256,
+    parser.add_argument('--rnn_size', type=int, default=512,
                        help='size of RNN hidden state')
     parser.add_argument('--num_layers', type=int, default=2,
                        help='number of layers in the RNN')
@@ -28,7 +28,7 @@ def main():
                        help='rnn, gru, or lstm')
     parser.add_argument('--batch_size', type=int, default=50,
                        help='minibatch size')
-    parser.add_argument('--seq_length', type=int, default=10,
+    parser.add_argument('--seq_length', type=int, default=25,
                        help='RNN sequence length')
     parser.add_argument('--num_epochs', type=int, default=500,
                        help='number of epochs')
@@ -36,7 +36,7 @@ def main():
                        help='save frequency')
     parser.add_argument('--grad_clip', type=float, default=5.,
                        help='clip gradients at this value')
-    parser.add_argument('--learning_rate', type=float, default=0.002,
+    parser.add_argument('--learning_rate', type=float, default=0.001,
                        help='learning rate')
     parser.add_argument('--decay_rate', type=float, default=0.97,
                        help='decay rate for rmsprop')

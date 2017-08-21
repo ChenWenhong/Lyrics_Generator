@@ -87,8 +87,6 @@ def rhymes(word1, word2, level=2):
 
     pronunciations = getSyllables(word1)
     pronunciations2 = getSyllables(word2)
-    print(pronunciations)
-    print(pronunciations2)
     if pronunciations and pronunciations2:
         for syllable in pronunciations:
             for syllable2 in pronunciations2:
