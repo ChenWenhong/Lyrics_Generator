@@ -70,7 +70,7 @@ class TextLoader():
         lyrics = pt.tokenize(data)
         for i in range(0,len(lyrics)-1):
             lyrics[i].append(' ')
-            if(pt.rhymes(lyrics[i][-1],lyrics[i+1][-1],1)):
+            if(pt.rhymes(lyrics[i][-2],lyrics[i+1][-2],1)):
                 lyrics[i].append('*endLine*')
                 lyrics[i+1].append('*endLine*')
      
