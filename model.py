@@ -152,5 +152,5 @@ class Model():
             pred = beam_search_pick(prime, width)
             for i, label in enumerate(pred):
                 ret += ' ' + words[label] if i > 0 else words[label]
-        ret = ret.replace('*break*', '\n').replace('*endLine*','')
+        ret = ret.replace('*breakLine*', '\n').replace('*endLine*','').replace('*headLine*','')
         return ret
