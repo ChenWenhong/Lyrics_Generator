@@ -79,7 +79,7 @@ class TextLoader():
         print("List of lyrics:",lyrics)
         lyrics_list = list(itertools.chain.from_iterable(lyrics))
         # Optional text cleaning or make them lower case, etc.
-        data = self.clean_str(data)
+        # data = self.clean_str(data)
         x_text = data.split()
 
         self.vocab, self.words = self.build_vocab(x_text)
