@@ -76,13 +76,13 @@ class TextLoader():
                 if(pt.rhymes(lyrics[i][-2],lyrics[i+1][-2],1)):
                     lyrics[i].append('*endLine*')
                     lyrics[i+1].append('*endLine*')
-        print("List of lyrics:",lyrics)
         lyrics_list = list(itertools.chain.from_iterable(lyrics))
         # Optional text cleaning or make them lower case, etc.
         # data = self.clean_str(data)
-        x_text = data.split()
+        # x_text = data.split()
 
-        self.vocab, self.words = self.build_vocab(x_text)
+
+        self.vocab, self.words = self.build_vocab(lyrics_list)
         self.vocab_size = len(self.words)
 
         with open(vocab_file, 'wb') as f:
@@ -90,7 +90,7 @@ class TextLoader():
 
         #The same operation like this [self.vocab[word] for word in x_text]
         # index of words as our basic data
-        self.tensor = np.array(list(map(self.vocab.get, x_text)))
+        self.tensor = np.array(list(map(self.vocab.get, lyrics_list)))
         # Save the data to data.npy
         np.save(tensor_file, self.tensor)
 

@@ -23,6 +23,7 @@ class Model():
             raise Exception("model type not supported: {}".format(args.model))
 
         cells = []
+        dropout = tf.placeholder(tf.float32)
         for _ in range(args.num_layers):
             cell = cell_fn(args.rnn_size)
             cells.append(cell)
@@ -152,5 +153,5 @@ class Model():
             pred = beam_search_pick(prime, width)
             for i, label in enumerate(pred):
                 ret += ' ' + words[label] if i > 0 else words[label]
-        ret = ret.replace('*breakLine*', '\r\n').replace('*endLine*','').replace('*headLine*','')
+        ret = ret.replace('*breakLine*', '\n').replace('*endLine*','').replace('*headLine*','')
         return ret
