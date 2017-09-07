@@ -69,7 +69,6 @@ class TextLoader():
 
         lyrics = pt.tokenize(data)
         for i in range(0,len(lyrics)):
-<<<<<<< HEAD
             lyrics[i].insert(0,'<go>')
         for i in range(0,len(lyrics)-1):
             if(len(lyrics[i]) > 1 and len(lyrics[i + 1]) > 1):
@@ -77,26 +76,12 @@ class TextLoader():
                     lyrics[i].append('<endLine>')
                     lyrics[i+1].append('<endLine>')
         for i in range(0, len(lyrics)):
-            lyrics[i].append('<eos>')  
+            lyrics[i].append('<eos>')
         complete_lyrics_list = [x for x in lyrics if not len(x) == 3 and not x[1] == ""]
         for i in range(0,len(complete_lyrics_list)):
             print(complete_lyrics_list[i])
-        
-        lyrics_list = list(itertools.chain.from_iterable(complete_lyrics_list))
-=======
-            lyrics[i].append('*breakLine*')
-            lyrics[i].insert(0,'*headLine*')
-        for i in range(0,len(lyrics)-1):
-            if(len(lyrics[i]) > 1 and len(lyrics[i + 1]) > 1):
-                if(pt.rhymes(lyrics[i][-2],lyrics[i+1][-2],1)):
-                    lyrics[i].append('*endLine*')
-                    lyrics[i+1].append('*endLine*')
-        lyrics_list = list(itertools.chain.from_iterable(lyrics))
-        # Optional text cleaning or make them lower case, etc.
-        # data = self.clean_str(data)
-        # x_text = data.split()
 
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
+        lyrics_list = list(itertools.chain.from_iterable(complete_lyrics_list))
 
         self.vocab, self.words = self.build_vocab(lyrics_list)
         self.vocab_size = len(self.words)

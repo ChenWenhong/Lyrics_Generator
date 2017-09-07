@@ -23,15 +23,8 @@ class Model():
             raise Exception("model type not supported: {}".format(args.model))
 
         cells = []
-<<<<<<< HEAD
         for _ in range(args.num_layers):
             cell = cell_fn(args.rnn_size)
-            cell = tf.contrib.rnn.DropoutWrapper(cell,output_keep_prob=0.6)
-=======
-        dropout = tf.placeholder(tf.float32)
-        for _ in range(args.num_layers):
-            cell = cell_fn(args.rnn_size)
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
             cells.append(cell)
 
         self.cell = cell = rnn.MultiRNNCell(cells)
@@ -159,9 +152,6 @@ class Model():
             pred = beam_search_pick(prime, width)
             for i, label in enumerate(pred):
                 ret += ' ' + words[label] if i > 0 else words[label]
-<<<<<<< HEAD
         ret = ret.replace('<eos>', '\n').replace('<endLine>','').replace('<go>','')
-=======
-        ret = ret.replace('*breakLine*', '\n').replace('*endLine*','').replace('*headLine*','')
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
+
         return ret

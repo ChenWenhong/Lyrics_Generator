@@ -5,11 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-<<<<<<< HEAD
 *.pyc
-=======
 
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
+
 # Distribution / packaging
 .Python
 env/
@@ -29,7 +27,11 @@ wheels/
 .installed.cfg
 *.egg
 <<<<<<< HEAD
+<<<<<<< HEAD
 save/
+=======
+
+>>>>>>> d369378359131c5f405b4f241b995c81f068086a
 =======
 
 >>>>>>> d369378359131c5f405b4f241b995c81f068086a

@@ -26,20 +26,13 @@ def main():
                        help='number of layers in the RNN')
     parser.add_argument('--model', type=str, default='lstm',
                        help='rnn, gru, or lstm')
-<<<<<<< HEAD
+
     parser.add_argument('--batch_size', type=int, default=100,
                        help='minibatch size')
     parser.add_argument('--seq_length', type=int, default=10,
                        help='RNN sequence length')
     parser.add_argument('--num_epochs', type=int, default=100,
-=======
-    parser.add_argument('--batch_size', type=int, default=30,
-                       help='minibatch size')
-    parser.add_argument('--seq_length', type=int, default=15,
-                       help='RNN sequence length')
-    parser.add_argument('--num_epochs', type=int, default=300,
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
-                       help='number of epochs')
+
     parser.add_argument('--save_every', type=int, default=1000,
                        help='save frequency')
     parser.add_argument('--grad_clip', type=float, default=5.,
@@ -48,11 +41,8 @@ def main():
                        help='learning rate')
     parser.add_argument('--decay_rate', type=float, default=0.97,
                        help='decay rate for rmsprop')
-<<<<<<< HEAD
+
     parser.add_argument('--gpu_mem', type=float, default=1,
-=======
-    parser.add_argument('--gpu_mem', type=float, default=0.666,
->>>>>>> d369378359131c5f405b4f241b995c81f068086a
                        help='%% of gpu memory to be allocated to this process. Default is 66.6%%')
     parser.add_argument('--init_from', type=str, default=None,
                        help="""continue training from saved model at this path. Path must contain files saved by previous training process:
