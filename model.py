@@ -118,9 +118,9 @@ class Model():
             state = sess.run(self.cell.zero_state(1, tf.float32))
             if not len(prime) or prime == ' ':
                 prime  = random.choice(list(vocab.keys()))
-            print (prime)
+            #print (prime)
             for word in prime.split()[:-1]:
-                print (word)
+                #print (word)
                 x = np.zeros((1, 1))
                 x[0, 0] = vocab.get(word,0)
                 feed = {self.input_data: x, self.initial_state:state}
@@ -128,23 +128,24 @@ class Model():
 
             ret = prime
             word = prime.split()[-1]
+            count = 0
             for n in range(num):
+                count += 1
                 x = np.zeros((1, 1))
                 x[0, 0] = vocab.get(word, 0)
                 feed = {self.input_data: x, self.initial_state:state}
                 [probs, state] = sess.run([self.probs, self.final_state], feed)
                 p = probs[0]
-
                 if sampling_type == 0:
                     sample = np.argmax(p)
                 elif sampling_type == 2:
-                    if word == '\n':
+                    if word == '/n':
                         sample = weighted_pick(p)
                     else:
                         sample = np.argmax(p)
                 else: # sampling_type == 1 default:
                     sample = weighted_pick(p)
-
+                  
                 pred = words[sample]
                 ret += ' ' + pred
                 word = pred
@@ -152,6 +153,5 @@ class Model():
             pred = beam_search_pick(prime, width)
             for i, label in enumerate(pred):
                 ret += ' ' + words[label] if i > 0 else words[label]
-        ret = ret.replace('<eos>', '\n').replace('<endLine>','').replace('<go>','')
-
+        ret = ret.replace('<eos>', '\n').replace('<endLine>','').replace('<go>','')        
         return ret

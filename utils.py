@@ -15,7 +15,7 @@ class TextLoader():
         self.seq_length = seq_length
 
         input_file = os.path.join(data_dir, "input.txt")
-        vocab_file = os.path.join(data_dir, "vocab.pkl")
+        vocab_file = os.path.join(data_dir, "data_vocab.pkl")
         tensor_file = os.path.join(data_dir, "data.npy")
 
         # Let's not read voca and data from file. We many change them.
@@ -72,9 +72,11 @@ class TextLoader():
             lyrics[i].insert(0,'<go>')
         for i in range(0,len(lyrics)-1):
             if(len(lyrics[i]) > 1 and len(lyrics[i + 1]) > 1):
-                if(pt.rhymes(lyrics[i][-2],lyrics[i+1][-2],1)):
-                    lyrics[i].append('<endLine>')
-                    lyrics[i+1].append('<endLine>')
+                if(pt.rhymes(lyrics[i][-1],lyrics[i+1][-1],1)):
+                    pronciation_word1 = pt.getSyllables(lyrics[i][-1])
+                    pronciation_word2 = pt.getSyllables(lyrics[i+1][-1])
+                    lyrics[i].append('<endLine_%s>' % pronciation_word1[-1][-1])
+                    lyrics[i+1].append('<endLine_%s>' % pronciation_word2[-1][-1])
         for i in range(0, len(lyrics)):
             lyrics[i].append('<eos>')
         complete_lyrics_list = [x for x in lyrics if not len(x) == 3 and not x[1] == ""]

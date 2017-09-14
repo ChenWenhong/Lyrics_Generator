@@ -8,10 +8,39 @@ from string import ascii_lowercase
 from Levenshtein import distance
 from .countsyl import count_syllables
 from .simpletokenizer import tokenize
-
+from nltk.corpus import wordnet as wn
 # Import CMU dictionary
 with open(os.path.join(os.path.dirname(__file__), 'cmudict/cmudict.json')) as json_file:
     cmu = json.load(json_file)
+
+def loop_cmu(need_rhyme_word,semantic_word):
+    syllables = getSyllables(need_rhyme_word)
+    last_prounciation = syllables[-1][-1]
+    rhyme_words = []
+    common_rhyme_words = []
+    similar_rhyme_words = []
+    if not len(wn.synsets(semantic_word)) > 0:
+        print('Can not find similar rhyme word')
+    else:
+        for key in cmu:
+            syllable = getSyllables(key)
+            if syllable[-1][-1] == last_prounciation:
+                rhyme_words.append(key)
+        for rhyme_word in rhyme_words:
+            if len(wn.synsets(rhyme_word))>0:
+                common_rhyme_words.append(rhyme_word)
+
+        for common_words in common_rhyme_words:
+            if not (wn.synsets(common_words)[0].wup_similarity(wn.synsets(semantic_word)[0])) is None and (wn.synsets(common_words)[0].wup_similarity(wn.synsets(semantic_word)[0])) > 0.75:
+                similar_rhyme_words.append(common_words)
+
+        if len(similar_rhyme_words) > 0:
+            for similar_word in similar_rhyme_words:
+                print(similar_word)
+        else:
+            print('No suitable word')
+
+
 
 possible_metres = {
     'iambic trimeter'     : '010101',

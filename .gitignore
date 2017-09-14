@@ -23,6 +23,8 @@ parts/
 sdist/
 var/
 wheels/
+save_lstm_1024/
+log_lstm_1024/
 *.egg-info/
 .installed.cfg
 *.egg
