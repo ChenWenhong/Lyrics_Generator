@@ -43,42 +43,7 @@ def sample(args):
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
             ret = model.sample(sess,words,vocab,args.n,args.prime,args.sample,args.pick,args.width)
-            process_text(ret,args.show_prounciation)
+            print(ret)
 
-def process_text(ret,show_prounciation):
-    lyrics_list = pt.tokenize(ret)
-    newlist = []
-    for element in lyrics_list:
-        if 'endLine' in element[-1]:
-            newLine = element[:-1]
-        else:
-            newLine = element
-        newlist.append(newLine) 
-        
-    if show_prounciation == 1:
-        for newLine in newlist:
-            last_word_pro = pt.getSyllables(newLine[-1])
-            if last_word_pro:
-                last_phonme = last_word_pro[-1][-1]
-                newLine.append(last_phonme)
-        for i in range(len(newlist)):
-            new_ret = ' '.join(newlist[i])
-            print(i,' ',new_ret)
-    else:
-        for i in range(len(newlist)):
-            new_ret = ' '.join(newlist[i])
-            print(new_ret)
-    condition_loop = True
-    while(condition_loop):
-        input_command = input("Please input a command, 1 for find the rhyme word, 2 for quit the system:")
-        if input_command == 1:
-            input_line = input("Please input the number of a line which you wants to modify the last word. The system will provide some candidate rhyme words:")
-            number_of_line = int(input_line)
-            if number_of_line < len(newlist):
-                print("The word needed to be rhyme is:", newlist[number_of_line][-2], "The word needed to have similar meaning is:",newlist[number_of_line - 1][-2])
-                print('\n')
-                pt.loop_cmu(newlist[number_of_line][-2],newlist[number_of_line - 1][-2])        
-        else:
-            break;
 if __name__ == '__main__':
     main()

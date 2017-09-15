@@ -8,6 +8,7 @@ import re
 import itertools
 import poetrytools as pt
 import itertools
+import string
 class TextLoader():
     def __init__(self, data_dir, batch_size, seq_length, encoding=None):
         self.data_dir = data_dir
@@ -15,7 +16,7 @@ class TextLoader():
         self.seq_length = seq_length
 
         input_file = os.path.join(data_dir, "input.txt")
-        vocab_file = os.path.join(data_dir, "data_vocab.pkl")
+        vocab_file = os.path.join(data_dir, "data.pkl")
         tensor_file = os.path.join(data_dir, "data.npy")
 
         # Let's not read voca and data from file. We many change them.
@@ -33,20 +34,19 @@ class TextLoader():
         Tokenization/string cleaning for all datasets except for SST.
         Original taken from https://github.com/yoonkim/CNN_sentence/blob/master/process_data
         """
-        # string = re.sub(r"[^가-힣A-Za-z0-9(),!?\'\`]", " ", string)
-        # string = re.sub(r"\'s", " \'s", string)
-        # string = re.sub(r"\'ve", " \'ve", string)
-        # string = re.sub(r"n\'t", " n\'t", string)
-        # string = re.sub(r"\'re", " \'re", string)
-        # string = re.sub(r"\'d", " \'d", string)
-        # string = re.sub(r"\'ll", " \'ll", string)
-        # string = re.sub(r",", " , ", string)
-        # string = re.sub(r"!", " ! ", string)
-        # string = re.sub(r"\(", " \( ", string)
-        # string = re.sub(r"\)", " \) ", string)
-        # string = re.sub(r"\?", " \? ", string)
-        # string = re.sub(r"\s{2,}", " ", string)
-        string = string.replace('\r\n', ' *BREAK* ').replace('\n', ' *BREAK* ').replace('  ', ' ')
+        string = re.sub(r"[^가-힣A-Za-z0-9(),!?\'\`]", " ", string)
+        string = re.sub(r"\'s", " \'s", string)
+        string = re.sub(r"\'ve", " \'ve", string)
+        string = re.sub(r"n\'t", " n\'t", string)
+        string = re.sub(r"\'re", " \'re", string)
+        string = re.sub(r"\'d", " \'d", string)
+        string = re.sub(r"\'ll", " \'ll", string)
+        string = re.sub(r",", " , ", string)
+        string = re.sub(r"!", " ! ", string)
+        string = re.sub(r"\(", " \( ", string)
+        string = re.sub(r"\)", " \) ", string)
+        string = re.sub(r"\?", " \? ", string)
+        string = re.sub(r"\s{2,}", " ", string)
         return string.strip().lower()
 
     def build_vocab(self, sentences):
@@ -66,17 +66,15 @@ class TextLoader():
     def preprocess(self, input_file, vocab_file, tensor_file, encoding):
         with codecs.open(input_file, "r", encoding=encoding) as f:
             data = f.read()
-
-        lyrics = pt.tokenize(data)
+        new_data = data.translate(None,string.punctuation)
+        lyrics = pt.tokenize(new_data)
         for i in range(0,len(lyrics)):
             lyrics[i].insert(0,'<go>')
         for i in range(0,len(lyrics)-1):
             if(len(lyrics[i]) > 1 and len(lyrics[i + 1]) > 1):
                 if(pt.rhymes(lyrics[i][-1],lyrics[i+1][-1],1)):
-                    pronciation_word1 = pt.getSyllables(lyrics[i][-1])
-                    pronciation_word2 = pt.getSyllables(lyrics[i+1][-1])
-                    lyrics[i].append('<endLine_%s>' % pronciation_word1[-1][-1])
-                    lyrics[i+1].append('<endLine_%s>' % pronciation_word2[-1][-1])
+                    lyrics[i].append('<endLine>')
+                    lyrics[i+1].append('<endLine>')
         for i in range(0, len(lyrics)):
             lyrics[i].append('<eos>')
         complete_lyrics_list = [x for x in lyrics if not len(x) == 3 and not x[1] == ""]

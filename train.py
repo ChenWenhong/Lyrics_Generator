@@ -16,7 +16,7 @@ def main():
                        help='data directory containing input.txt')
     parser.add_argument('--input_encoding', type=str, default=None,
                        help='character encoding of input.txt, from https://docs.python.org/3/library/codecs.html#standard-encodings')
-    parser.add_argument('--log_dir', type=str, default='logs_lstm_1024',
+    parser.add_argument('--log_dir', type=str, default='logs_lstm_logs',
                        help='directory containing tensorboard logs')
     parser.add_argument('--save_dir', type=str, default='save_lstm_1024',
                        help='directory to store checkpointed models')
@@ -31,7 +31,7 @@ def main():
                        help='minibatch size')
     parser.add_argument('--seq_length', type=int, default=10,
                        help='RNN sequence length')
-    parser.add_argument('--num_epochs', type=int, default=85,
+    parser.add_argument('--num_epochs', type=int, default=100,
                        help='number of epochs')
 
     parser.add_argument('--save_every', type=int, default=1000,

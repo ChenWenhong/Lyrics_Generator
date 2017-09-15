@@ -85,6 +85,7 @@ class Model():
 
     def sample(self, sess, words, vocab, num=200, prime='first all', sampling_type=1, pick=0, width=4):
         def weighted_pick(weights):
+            print('Weight set is:', weights)
             t = np.cumsum(weights)
             s = np.sum(weights)
             return(int(np.searchsorted(t, np.random.rand(1)*s)))
@@ -118,9 +119,7 @@ class Model():
             state = sess.run(self.cell.zero_state(1, tf.float32))
             if not len(prime) or prime == ' ':
                 prime  = random.choice(list(vocab.keys()))
-            #print (prime)
             for word in prime.split()[:-1]:
-                #print (word)
                 x = np.zeros((1, 1))
                 x[0, 0] = vocab.get(word,0)
                 feed = {self.input_data: x, self.initial_state:state}
@@ -145,7 +144,6 @@ class Model():
                         sample = np.argmax(p)
                 else: # sampling_type == 1 default:
                     sample = weighted_pick(p)
-                  
                 pred = words[sample]
                 ret += ' ' + pred
                 word = pred

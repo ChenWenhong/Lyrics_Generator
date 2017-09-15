@@ -50,8 +50,7 @@ class SongPageParser(HTMLParser):
 
     def handle_data(self, data):
         if self.record:
-            self.lyrics += re.sub(r'[^\x00-\x7F]+', '\'', data.lstrip()) + "\n"
-
+            self.lyrics += re.sub(r'[^\x00-\x7F]+', '\'', data.lstrip()) + "\n" 
 
 class ArtistPageParser(HTMLParser):
     match = 0
